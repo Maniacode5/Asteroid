@@ -9,9 +9,6 @@ class Vaisseau extends Component {
       const { mooving } = this.state
       switch (event.key) {
         case this.props.upArrow:
-        if mooving ===
-
-
       }
       console.log("fvzv")
     })
