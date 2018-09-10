@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import flatten from "lodash/flatten";
 
+import Vaisseau from './Vaisseau.jsx';
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -43,7 +45,7 @@ class App extends Component {
             [0, 40],
             [0, 20]
         ]
-        return <path d={`M ${this.randomLines(points, 5).map((p) => p.join(',')).join(" L ")} Z `} style={{"stroke": "white"}}/>
+        return <path d={`M ${this.randomLines(points, 4).map((p) => p.join(',')).join(" L ")} Z `} style={{"stroke": "white"}}/>
     }
 
     render() {
@@ -51,11 +53,8 @@ class App extends Component {
             <section>
                 <h1>ASTEROID</h1>
                 <svg className="Map">
-                    <defs>
-                        <path id="vaisseau" d="M 10,0 L 0,20 L 8,15 L 10,25 L 12,15 L 20,20 Z" style={{"stroke": "white"}} />
-                    </defs>
                     {this.generateAsteroid()}
-                    <use href="#vaisseau" x="50" y="50"/>
+                    <Vaisseau />
                 </svg>
             </section>
         );
