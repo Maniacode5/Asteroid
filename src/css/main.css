@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+body > #root {
+  display: flex;
+  width: 100%;
+}
+body > #root > section {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+body > #root > section > h1 {
+    margin: 0;
+    padding: 0;
+    padding-top: 1vw;
+    color: white;
+    text-align: center;
+    font-family: "Press Start 2P";
+    font-size: 5vw;
+}
+body > #root > section > .Map {
+    padding: 0;
+    border: solid 1px white;
+    background-color: black;
+    height: 100%;
+}
