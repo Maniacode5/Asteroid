@@ -31,3 +31,7 @@ body > #root > section > .Map {
     background-color: black;
     height: 100%;
 }
+
+svg #vaisseau {
+    //transform-origin: center;
+}
