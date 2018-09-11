@@ -53,7 +53,7 @@ class App extends Component {
            <section>
                <h1>ASTEROID</h1>
                <svg id="Map" className="Map">
-                   {/*this.generateAsteroid()*/}
+                   {this.generateAsteroid()}
                    <Vaisseau className="" move="z" down="s" turnLeft="q" turnRight="d" />
                </svg>
            </section>
