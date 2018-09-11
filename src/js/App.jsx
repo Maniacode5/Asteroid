@@ -54,7 +54,7 @@ class App extends Component {
                <h1>ASTEROID</h1>
                <svg id="Map" className="Map">
                    {this.generateAsteroid()}
-                   <Vaisseau className="" move="z" down="s" turnLeft="q" turnRight="d" />
+                   <Vaisseau className="" move="z" turnLeft="q" turnRight="d" />
                </svg>
            </section>
        );
