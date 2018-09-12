@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import cx from "classnames";
 import Vector from "./Vector";
 import {positionLoop} from "./util"
 
-const DEFAULT_ROTATION = 10;
-const DEFAULT_SPEED = 50;
+const DEFAULT_ROTATION = 5;
+const DEFAULT_SPEED = 5;
 const DEFAULT_ANGLE = -90;
 
 class Vaisseau extends Component {
@@ -21,7 +21,7 @@ class Vaisseau extends Component {
             const newState = {};
 
             if (mooving) {
-                newState.position = positionLoop("Map", Vector.add(position, trajectoire));
+                newState.position = positionLoop("Map", Vector.add(position, trajectoire), this._element.getBoundingClientRect());
             }
 
             if (turning) {
@@ -29,10 +29,10 @@ class Vaisseau extends Component {
 
                 switch (turning) {
                     case "left":
-                        newState.trajectoire.rotate(-DEFAULT_ROTATION);
+                        newState.trajectoire = trajectoire.rotate(-DEFAULT_ROTATION);
                         break;
                     case "right":
-                        newState.trajectoire.rotate(DEFAULT_ROTATION);
+                        newState.trajectoire = trajectoire.rotate(DEFAULT_ROTATION);
                         break;
                 }
             }
@@ -103,9 +103,7 @@ class Vaisseau extends Component {
     render() {
         const { position = { coordinates: { x: 0, y: 0 } }, trajectoire = {} } = this.state;
         return (
-            <Fragment>
-                <path id="vaisseau" d="M 25,10 L 0,0 L 5,7.5 L -5,10 L 5,12.5 L 0,20 Z"  href="#vaisseau" className={cx("vaisseau", this.props.className)} transform={`rotate(${trajectoire.angle} ${position.coordinates.x + 10} ${position.coordinates.y+12.5}) translate(${position.coordinates.x} ${position.coordinates.y})`} stroke="white" />
-            </Fragment>
+            <path ref={(r) => { this._element = r; }} id="vaisseau" d="M 25,10 L 0,0 L 5,7.5 L -5,10 L 5,12.5 L 0,20 Z"  href="#vaisseau" className={cx("vaisseau", this.props.className)} transform={`rotate(${trajectoire.angle} ${position.coordinates.x + 10} ${position.coordinates.y+12.5}) translate(${position.coordinates.x} ${position.coordinates.y})`} stroke="white" />
         );
     }
 }
