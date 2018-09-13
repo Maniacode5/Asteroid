@@ -92,20 +92,20 @@ export class Vector {
 
 export class Segment {
   static intersect = ({ position: A, vector: AB }, { position: C, vector: CD}) => {
-    const divisor = ((AB.x * CD.y) - (AB.y * CD.x)); // diviseur
+    const divisor = ((AB.coordinates.x * CD.coordinates.y) - (AB.coordinates.y * CD.coordinates.x)); // diviseur
     let m; // Paramétre du point d'intersection [CD] <> ]AB[ (si 0 < m < 1 le point d'intersection est sur [CD])
     let k;  // Paramétre du point d'intersection [AB] <> ]CD[ (si 0 < k < 1 le point d'intersection est sur [AB])
 
     if (divisor) { // Les droites se coupents, on calcul les paramétres des 2 segements sur leurs droites secantes
-      m = (AB.x * A.y
-           - AB.x * C.y
-           - AB.y * A.x
-           + AB.y * C.x
+      m = (AB.coordinates.x * A.coordinates.y
+           - AB.coordinates.x * C.coordinates.y
+           - AB.coordinates.y * A.coordinates.x
+           + AB.coordinates.y * C.coordinates.x
           ) / divisor;
-      k = (CD.x * A.y
-           - CD.x * C.y
-           - CD.y * A.x
-           + CD.y * C.x
+      k = (CD.coordinates.x * A.coordinates.y
+           - CD.coordinates.x * C.coordinates.y
+           - CD.coordinates.y * A.coordinates.x
+           + CD.coordinates.y * C.coordinates.x
           ) / divisor;
     } else { // Les droites sont paralleles, pas d'intersection
       return null;

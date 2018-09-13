@@ -85,10 +85,10 @@ class Asteroid extends Component {
         })
     }
     render() {
-        const { path, position = { coordinates: { x: 0, y: 0 } }, trajectoire = {} } = this.state;
+        const { path, position = { coordinates: { x: 0, y: 0 } } } = this.state;
 
         return (
-            <path ref={(r) => { this._element = r }} d={path} style={{"stroke": "white"}} transform={`translate(${position.coordinates.x} ${position.coordinates.y})`} />
+            <path ref={(r) => { this._element = r }} d={path} style={{"stroke": "white", "fill": "transparent"}} transform={`translate(${position.coordinates.x} ${position.coordinates.y})`} />
         );
     }
 }

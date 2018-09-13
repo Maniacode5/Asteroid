@@ -13,6 +13,12 @@ class App extends Component {
                    <Asteroid/>
                    <Asteroid/>
                    <Asteroid/>
+                   <Asteroid/>
+                   <Asteroid/>
+                   <Asteroid/>
+                   <Asteroid/>
+                   <Asteroid/>
+                   <Asteroid/>
                    <Vaisseau className="" move="z" turnLeft="q" turnRight="d" />
                </svg>
            </section>
