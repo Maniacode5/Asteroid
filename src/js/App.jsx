@@ -7,8 +7,7 @@ import { getRandomColor } from './util.js';
 
 class App extends Component {
   state = {
-    shooting: false,
-    bullets: []
+    shooting: false
   };
 
   componentWillMount() {
@@ -44,23 +43,28 @@ class App extends Component {
     }, false);
   }
 
+  asteroid(v) {
+    var plus = v / 2;
+    var fois = v / (plus);
+    var asteroids = [];
+
+    const vaisseau = (<Vaisseau className="" turnLeft={37} turnRight={39} shoot={32} color={getRandomColor()} />);
+
+    for (var i = 0; i < Math.random() + plus * fois; i++) {
+      asteroids.push(<Asteroid vaisseau={vaisseau}/>)
+    }
+    return asteroids;
+  }
+
   render() {
     return (
       <section>
         <h1>ASTEROID</h1>
-        <svg id="Map" className="Map">$
-          <Asteroid />
-          <Asteroid />
-          <Asteroid />
-          <Vaisseau className="" move={40} turnLeft={37} turnRight={39} shoot={32} color={getRandomColor()} />
-          <ul>
-            {
-              this.state.bullets.map(() => {
-
-                return ;
-              })
-            }
-          </ul>
+        <svg id="Map" className="Map">
+          {
+            this.asteroid(10)
+          }
+          <Vaisseau className="" turnLeft={37} turnRight={39} shoot={32} color={getRandomColor()} />
         </svg>
       </section>
     );

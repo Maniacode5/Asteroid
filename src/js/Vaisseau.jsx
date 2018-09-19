@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import cx from "classnames";
 import Vector from "./Vector";
-import {positionLoop, getRandomColor} from "./util";
+import {positionLoop} from "./util";
 // import Collision from './CollisionCercle';
 
 const DEFAULT_ROTATION = 4;
@@ -14,8 +14,8 @@ class Vaisseau extends Component {
         position: undefined,
         mooving: true,
         turning: false,
-        shipFillColor: getRandomColor(),
-        shipStrokeColor: getRandomColor()
+        shipFillColor: 'transparent',
+        shipStrokeColor: 'white'
     };
 
     timer () {
@@ -25,8 +25,6 @@ class Vaisseau extends Component {
 
             if (mooving) {
                 newState.position = positionLoop("Map", Vector.add(position, trajectoire), this._element.getBoundingClientRect());
-                // this.setState({ shipFillColor: getRandomColor(), shipStrokeColor: getRandomColor() })
-                this.setState({ shipFillColor: getRandomColor(), shipStrokeColor: getRandomColor()});
             }
 
             if (turning) {
