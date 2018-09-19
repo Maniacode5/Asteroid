@@ -33,5 +33,5 @@ body > #root > section > .Map {
 }
 
 svg #vaisseau {
-    //transform-origin: center;
+    transform: scale(1) translate(center);
 }

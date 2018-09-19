@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import cx from "classnames";
 import Vector from "./Vector";
-import {positionLoop} from "./util"
+import {positionLoop, getRandomColor} from "./util"
 
 const DEFAULT_ROTATION = 5;
 const DEFAULT_SPEED = 5;
-const DEFAULT_ANGLE = -90;
+
 
 class Vaisseau extends Component {
     state = {
         trajectoire: undefined,
         position: undefined,
-        mooving: false,
-        turning: false
+        mooving: true,
+        turning: false,
+        spaceFillColor: "transparent",
+        spaceStrokeColor: "white"
     };
 
     timer () {
@@ -37,6 +39,7 @@ class Vaisseau extends Component {
                 }
             }
 
+            //this.setState({ spaceStrokeColor: getRandomColor(), spaceFillColor: getRandomColor() })
             this.setState(newState);
         }, 10);
     }
@@ -46,10 +49,10 @@ class Vaisseau extends Component {
 
         this.setState({
             position: Vector.fromCoordinates(
-                mapBounding.left + (mapBounding.width / 2),
-                mapBounding.top + (mapBounding.height / 2)
+                (mapBounding.width / 2),
+                (mapBounding.height / 2)
             ),
-            trajectoire: new Vector(DEFAULT_SPEED, DEFAULT_ANGLE)
+            trajectoire: new Vector(DEFAULT_SPEED, this.props.angle)
         });
 
         document.addEventListener('keydown', (event) => {
@@ -103,7 +106,17 @@ class Vaisseau extends Component {
     render() {
         const { position = { coordinates: { x: 0, y: 0 } }, trajectoire = {} } = this.state;
         return (
-            <path ref={(r) => { this._element = r; }} id="vaisseau" d="M 25,10 L 0,0 L 5,7.5 L -5,10 L 5,12.5 L 0,20 Z"  href="#vaisseau" className={cx("vaisseau", this.props.className)} transform={`rotate(${trajectoire.angle} ${position.coordinates.x + 10} ${position.coordinates.y+12.5}) translate(${position.coordinates.x} ${position.coordinates.y})`} stroke="white" />
+            <path
+                ref={(r) => { this._element = r; }}
+                id="vaisseau"
+                d="M 25,10 L 0,0 L 5,7.5 L -5,10 L 5,12.5 L 0,20 Z"
+                href="#vaisseau"
+                className={cx("vaisseau", this.props.className)}
+                transform={`rotate(${trajectoire.angle} ${position.coordinates.x + 10} ${position.coordinates.y+12.5})
+                translate(${position.coordinates.x} ${position.coordinates.y})`}
+                fill={this.state.spaceFillColor}
+                stroke={this.state.spaceStrokeColor}
+                />
         );
     }
 }

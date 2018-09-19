@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import flatten from "lodash/flatten";
 import Vector from "./Vector";
-import {positionLoop} from "./util";
+import {positionLoop, getRandomColor} from "./util";
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -10,7 +10,9 @@ function getRandomInt(min, max) {
 class Asteroid extends Component {
     state =  {
         trajectoire: undefined,
-        position: undefined
+        position: undefined,
+        astFillColor: "transparent",
+        astStrokeColor: "white"
     }
 
     generateAsteroid(coef) {
@@ -60,7 +62,7 @@ class Asteroid extends Component {
             const newState = {
                 position : positionLoop("Map", Vector.add(position, trajectoire), boundingRect)
             };
-//console.log(position)
+            //this.setState({ astStrokeColor: getRandomColor(), astFillColor: getRandomColor() })
             this.setState(newState);
         }, 10);
     }
@@ -81,14 +83,20 @@ class Asteroid extends Component {
 
     componentWillMount() {
         this.setState({
-            path: this.generateAsteroid(4),
+            path: this.generateAsteroid(1),
         })
     }
     render() {
         const { path, position = { coordinates: { x: 0, y: 0 } } } = this.state;
 
         return (
-            <path ref={(r) => { this._element = r }} d={path} style={{"stroke": "white", "fill": "transparent"}} transform={`translate(${position.coordinates.x} ${position.coordinates.y})`} />
+            <path
+                ref={(r) => { this._element = r }}
+                d={path}
+                stroke={this.state.astStrokeColor}
+                fill={this.state.astFillColor}
+                transform={`translate(${position.coordinates.x} ${position.coordinates.y})`}
+                />
         );
     }
 }
