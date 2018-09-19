@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import flatten from "lodash/flatten";
 import Vector from "./Vector";
-import {positionLoop} from "./util";
+import { positionLoop, getRandomColor } from "./util";
+//import Collision from './Collision';
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -10,7 +11,9 @@ function getRandomInt(min, max) {
 class Asteroid extends Component {
     state =  {
         trajectoire: undefined,
-        position: undefined
+        position: undefined,
+        astFillColor: getRandomColor(),
+        astStrokeColor: getRandomColor()
     }
 
     generateAsteroid(coef) {
@@ -60,6 +63,9 @@ class Asteroid extends Component {
             const newState = {
                 position : positionLoop("Map", Vector.add(position, trajectoire), boundingRect)
             };
+            this.setState({ astFillColor: getRandomColor(), astStrokeColor: getRandomColor()});
+            //this.setState({ astStrokeColor: getRandomColor(), astFillColor: getRandomColor() });
+            //Collision(this._element, document.getElementById("vaisseau"));
 //console.log(position)
             this.setState(newState);
         }, 10);
@@ -70,10 +76,10 @@ class Asteroid extends Component {
 
         this.setState({
             position: Vector.fromCoordinates(
-                mapBounding.left + Math.random() * mapBounding.width,
-                mapBounding.top + Math.random() * mapBounding.height
+                Math.random() * mapBounding.width,
+                Math.random() * mapBounding.height
             ),
-            trajectoire: new Vector((Math.random() + 1 ) * 3, Math.random() * 360)
+            trajectoire: new Vector((Math.random() + 1 ) * 2, Math.random() * 360)
         });
 
         this.timer();
@@ -85,10 +91,10 @@ class Asteroid extends Component {
         })
     }
     render() {
-        const { path, position = { coordinates: { x: 0, y: 0 } }, trajectoire = {} } = this.state;
+        const { path, position = { coordinates: { x: 0, y: 0 } } } = this.state;
 
         return (
-            <path ref={(r) => { this._element = r }} d={path} style={{"stroke": "white"}} transform={`translate(${position.coordinates.x} ${position.coordinates.y})`} />
+            <path className="asteroid" ref={(r) => { this._element = r }} d={path} stroke={this.state.astStrokeColor} fill={this.state.astFillColor} transform={`translate(${position.coordinates.x} ${position.coordinates.y})`} />
         );
     }
 }
