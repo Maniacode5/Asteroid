@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Vaisseau from './Vaisseau.jsx';
 import Asteroid from './Asteroid.jsx';
 
+import { getRandomColor } from './util.js';
+
 class App extends Component {
    render() {
        return (

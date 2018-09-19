@@ -1,4 +1,5 @@
 import Vector from "./Vector"
+
 export function positionLoop(screen, position, boundingRect) {
     const mapBounding = document.getElementById(screen).getBoundingClientRect();
 
@@ -17,4 +18,15 @@ export function positionLoop(screen, position, boundingRect) {
     }
 
     return position;
+}
+
+export function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+
+  return color;
 }
