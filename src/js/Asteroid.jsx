@@ -15,6 +15,19 @@ class Asteroid extends Component {
         astStrokeColor: "white"
     }
 
+    componentWillReceiveProps ({ frame }) {
+        if (frame  !== this.props.frame) {
+            const { trajectoire, position } = this.state;
+            const boundingRect = this._element.getBoundingClientRect();
+            const newState = {
+                position : positionLoop("Map", Vector.add(position, trajectoire), boundingRect)
+            };
+            this.setState({ astStrokeColor: getRandomColor(), astFillColor: getRandomColor() })
+            this.checkCollision();
+            this.setState(newState);
+        }
+    }
+
     generateAsteroid(coef) {
         const points = [
             [coef*20, 0],
@@ -55,16 +68,20 @@ class Asteroid extends Component {
         return `M ${coord.map((p) => p.join(',')).join(" L ")} Z`;
     }
 
-    timer () {
-        setInterval(() => {
-            const { trajectoire, position } = this.state;
-            const boundingRect = this._element.getBoundingClientRect();
-            const newState = {
-                position : positionLoop("Map", Vector.add(position, trajectoire), boundingRect)
-            };
-            //this.setState({ astStrokeColor: getRandomColor(), astFillColor: getRandomColor() })
-            this.setState(newState);
-        }, 10);
+    checkCollision() {
+        const { frame } = this.props;
+        var asteroid = this._element.getBoundingClientRect();
+        var vaisseau = document.getElementById('vaisseau').getBoundingClientRect();
+
+        if (!(vaisseau.top > asteroid.bottom || vaisseau.bottom < asteroid.top || vaisseau.left > asteroid.right || vaisseau.right < asteroid.left)) {
+            alert('Player red lose, you survive ' + Math.round(frame / 1000) + ' seconds !!!') ? "" : window.location.reload();
+        }
+
+        var vaisseau1 = document.getElementById('vaisseau1').getBoundingClientRect();
+
+        if (!(vaisseau1.top > asteroid.bottom || vaisseau1.bottom < asteroid.top || vaisseau1.left > asteroid.right || vaisseau1.right < asteroid.left)) {
+            alert('Player blue lose, you survive ' + Math.round(frame / 1000) + ' seconds !!!') ? "" : window.location.reload();
+        }
     }
 
     componentDidMount() {
@@ -77,8 +94,6 @@ class Asteroid extends Component {
             ),
             trajectoire: new Vector((Math.random() + 1 ) * 3, Math.random() * 360)
         });
-
-        this.timer();
     }
 
     componentWillMount() {

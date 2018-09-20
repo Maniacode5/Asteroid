@@ -5,7 +5,7 @@ import {positionLoop, getRandomColor} from "./util"
 
 const DEFAULT_ROTATION = 5;
 const DEFAULT_SPEED = 5;
-
+const DEFAULT_ANGLE = Math.random() * 360;
 
 class Vaisseau extends Component {
     state = {
@@ -17,33 +17,6 @@ class Vaisseau extends Component {
         spaceStrokeColor: "white"
     };
 
-    timer () {
-        setInterval(() => {
-            const { trajectoire, position, mooving, turning } = this.state;
-            const newState = {};
-
-            if (mooving) {
-                newState.position = positionLoop("Map", Vector.add(position, trajectoire), this._element.getBoundingClientRect());
-            }
-
-            if (turning) {
-                newState.trajectoire = new Vector(trajectoire.length, trajectoire.angle);
-
-                switch (turning) {
-                    case "left":
-                        newState.trajectoire = trajectoire.rotate(-DEFAULT_ROTATION);
-                        break;
-                    case "right":
-                        newState.trajectoire = trajectoire.rotate(DEFAULT_ROTATION);
-                        break;
-                }
-            }
-
-            //this.setState({ spaceStrokeColor: getRandomColor(), spaceFillColor: getRandomColor() })
-            this.setState(newState);
-        }, 10);
-    }
-
     componentDidMount() {
         const mapBounding = document.getElementById("Map").getBoundingClientRect();
 
@@ -52,15 +25,16 @@ class Vaisseau extends Component {
                 (mapBounding.width / 2),
                 (mapBounding.height / 2)
             ),
-            trajectoire: new Vector(DEFAULT_SPEED, this.props.angle)
+            trajectoire: new Vector(DEFAULT_SPEED, DEFAULT_ANGLE)
         });
 
-        document.addEventListener('keydown', (event) => {
+        window.addEventListener('keydown', (e) => {
             const newState = {};
 
-            switch (event.key){
+            switch (e.keyCode){
+
                 case this.props.move:
-                    newState.mooving = true;
+                    newState.mooving = false;
                     break;
 
                 case this.props.turnLeft:
@@ -69,6 +43,38 @@ class Vaisseau extends Component {
 
                 case this.props.turnRight:
                     newState.turning = "right";
+                    break;
+
+                default:
+                    break;
+            }
+
+            this.setState(newState);
+        });
+
+        window.addEventListener('keyup', (e) => {
+            let { turning } = this.state;
+            const newState = {};
+
+            switch (e.keyCode){
+
+                case this.props.move:
+                    newState.mooving = true;
+                    break;
+
+                case this.props.turnLeft:
+                    if (turning === "left") {
+                        newState.turning = false;
+                    }
+                    break;
+
+                case this.props.turnRight:
+                    if (turning === "right") {
+                        newState.turning = false;
+                    }
+                    break;
+
+                default:
                     break;
             }
 
@@ -99,8 +105,33 @@ class Vaisseau extends Component {
 
             this.setState(newState);
         });
+    }
 
-        this.timer();
+    componentWillReceiveProps ({ frame }) {
+        if (frame !== this.props.frame){
+            const { trajectoire, position, mooving, turning } = this.state;
+            const newState = {};
+
+            if (mooving) {
+                newState.position = positionLoop("Map", Vector.add(position, trajectoire), this._element.getBoundingClientRect());
+            }
+
+            if (turning) {
+                newState.trajectoire = new Vector(trajectoire.length, trajectoire.angle);
+
+                switch (turning) {
+                    case "left":
+                        newState.trajectoire = trajectoire.rotate(-DEFAULT_ROTATION);
+                        break;
+                    case "right":
+                        newState.trajectoire = trajectoire.rotate(DEFAULT_ROTATION);
+                        break;
+                }
+            }
+
+            this.setState({ spaceStrokeColor: getRandomColor(), spaceFillColor: getRandomColor() })
+            this.setState(newState);
+        }
     }
 
     render() {
@@ -108,14 +139,15 @@ class Vaisseau extends Component {
         return (
             <path
                 ref={(r) => { this._element = r; }}
-                id="vaisseau"
+                id={this.props.id}
                 d="M 25,10 L 0,0 L 5,7.5 L -5,10 L 5,12.5 L 0,20 Z"
                 href="#vaisseau"
                 className={cx("vaisseau", this.props.className)}
                 transform={`rotate(${trajectoire.angle} ${position.coordinates.x + 10} ${position.coordinates.y+12.5})
                 translate(${position.coordinates.x} ${position.coordinates.y})`}
-                fill={this.state.spaceFillColor}
-                stroke={this.state.spaceStrokeColor}
+                /*fill={this.state.spaceFillColor}*/
+                /*stroke={this.state.spaceStrokeColor}*/
+                fill={this.props.color}
                 />
         );
     }
