@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 import flatten from "lodash/flatten";
+import SAT from 'sat';
+
+
 import Vector from "./Vector";
 import {positionLoop, getRandomColor} from "./util";
 
@@ -15,6 +18,21 @@ class Asteroid extends Component {
         astStrokeColor: "white"
     }
 
+    get SATElement () {
+        const { position, coord } = this.state;
+
+        return new SAT.Polygon(
+            new SAT.Vector(position.coordinates.x, position.coordinates.y),
+            coord.reverse().map(([x, y]) => new SAT.Vector(x, y))
+        )
+    }
+
+    onCollision(element) {
+        if (element instanceof Asteroid) {
+            //console.log("Kaboom !!!!!")
+        }
+    }
+
     componentWillReceiveProps ({ frame }) {
         if (frame  !== this.props.frame) {
             const { trajectoire, position } = this.state;
@@ -23,7 +41,7 @@ class Asteroid extends Component {
                 position : positionLoop("Map", Vector.add(position, trajectoire), boundingRect)
             };
             this.setState({ astStrokeColor: getRandomColor(), astFillColor: getRandomColor() })
-            this.checkCollision();
+            //this.checkCollision();
             this.setState(newState);
         }
     }
@@ -65,13 +83,21 @@ class Asteroid extends Component {
             return newPoints;
         }))
 
-        return `M ${coord.map((p) => p.join(',')).join(" L ")} Z`;
+        return coord;
     }
 
+/*
     checkCollision() {
         const { frame } = this.props;
         var asteroid = this._element.getBoundingClientRect();
         var vaisseau = document.getElementById('vaisseau').getBoundingClientRect();
+
+        var asteroidSAT = new
+        var vaisseauSAT = new SAT.Box(
+            new SAT.Vector(vaisseau.x, vaisseau.y),
+            vaisseau.width,
+            vaisseau.height
+        )
 
         if (!(vaisseau.top > asteroid.bottom || vaisseau.bottom < asteroid.top || vaisseau.left > asteroid.right || vaisseau.right < asteroid.left)) {
             alert('Player red lose, you survive ' + Math.round(frame / 1000) + ' seconds !!!') ? "" : window.location.reload();
@@ -83,6 +109,7 @@ class Asteroid extends Component {
             alert('Player blue lose, you survive ' + Math.round(frame / 1000) + ' seconds !!!') ? "" : window.location.reload();
         }
     }
+*/
 
     componentDidMount() {
         const mapBounding = document.getElementById("Map").getBoundingClientRect();
@@ -98,18 +125,18 @@ class Asteroid extends Component {
 
     componentWillMount() {
         this.setState({
-            path: this.generateAsteroid(1),
+            coord: this.generateAsteroid(1),
         })
     }
     render() {
-        const { path, position = { coordinates: { x: 0, y: 0 } } } = this.state;
+        const { coord, position = { coordinates: { x: 0, y: 0 } } } = this.state;
 
         return (
             <path
                 ref={(r) => { this._element = r }}
-                d={path}
-                stroke={this.state.astStrokeColor}
-                fill={this.state.astFillColor}
+                d={`M ${coord.map((p) => p.join(',')).join(" L ")} Z`}
+                stroke="white"
+                fill="transparent"
                 transform={`translate(${position.coordinates.x} ${position.coordinates.y})`}
                 />
         );

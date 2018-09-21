@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+
 import cx from "classnames";
+import SAT from 'sat';
+
 import Vector from "./Vector";
-import {positionLoop, getRandomColor} from "./util"
+import {positionLoop, getRandomColor} from "./util";
+import Asteroid from "./Asteroid";
 
 const DEFAULT_ROTATION = 5;
 const DEFAULT_SPEED = 5;
@@ -14,8 +18,31 @@ class Vaisseau extends Component {
         mooving: true,
         turning: false,
         spaceFillColor: "transparent",
-        spaceStrokeColor: "white"
+        spaceStrokeColor: "white",
+        coord: [
+            [25,10],
+            [0,0],
+            [5,7.5],
+            [-5,10],
+            [5,12.5],
+            [0,20]
+        ]
     };
+
+    get SATElement () {
+        const { position, coord } = this.state;
+
+        return new SAT.Polygon(
+            new SAT.Vector(position.coordinates.x, position.coordinates.y),
+            coord.map(([x, y]) => new SAT.Vector(x, y))
+        )
+    }
+
+    onCollision(element) {
+        if (element instanceof Asteroid) {
+            //console.log("Boom !!!!!")
+        }
+    }
 
     componentDidMount() {
         const mapBounding = document.getElementById("Map").getBoundingClientRect();
@@ -101,6 +128,9 @@ class Vaisseau extends Component {
                         newState.turning = false;
                     }
                     break;
+                    
+                default:
+                    break;
             }
 
             this.setState(newState);
@@ -123,8 +153,12 @@ class Vaisseau extends Component {
                     case "left":
                         newState.trajectoire = trajectoire.rotate(-DEFAULT_ROTATION);
                         break;
+
                     case "right":
                         newState.trajectoire = trajectoire.rotate(DEFAULT_ROTATION);
+                        break;
+
+                    default:
                         break;
                 }
             }
