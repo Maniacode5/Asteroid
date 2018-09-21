@@ -79,7 +79,7 @@ class App extends Component {
   }
 
   render() {
-    const vaisseau = (<Vaisseau className="" move={40} turnLeft={37} turnRight={39} shoot={32} color={vCol} />);
+    const vaisseau = (<Vaisseau className="" turnLeft={37} turnRight={39} shoot={32} color={vCol} />);
 
     const game = (
       <svg id="Map" className="Map">
@@ -105,10 +105,10 @@ class App extends Component {
     var startOrStop;
 
     if (this.state.isGameStarted === 'start') {
-      startOrStop = 'block'; // change to 'Start Game' to get the stop game problem and ask to Jeremy
+      startOrStop = 'Start Game'; // change to 'Start Game' to get the stop game problem and ask to Jeremy
       console.log(startOrStop + ' debug App line 102');
     } else {
-      startOrStop = 'none'; // change to 'Stop Game' to get the stop game problem and ask to Jeremy
+      startOrStop = 'Stop Game'; // change to 'Stop Game' to get the stop game problem and ask to Jeremy
       console.log(startOrStop + ' debug startOrStop = ' + startOrStop + ' & state isGameStarted = ' + this.state.isGameStarted);
     }
 
@@ -119,7 +119,7 @@ class App extends Component {
 {
   // on the <p /> down there remove the style prop and change content to {startOrStop} to get the stop game problem and ask to Jeremy
 }
-          <p style={{ display: startOrStop }} onClick={() => this.startG(this.state.isGameStarted)}>Game Start</p>
+          <p onClick={() => this.startG(this.state.isGameStarted)}>{startOrStop}</p>
         </div>
         { displayed }
       </section>
@@ -178,7 +178,7 @@ class ColorChoice extends Component {
               var desc = null;
               var colPres = (
                 <svg>
-                  <path className="color-pres" stroke={ colID } d='M 0, 10 L 30, 20 L 20, 12 L 30, 10 L 20, 8 L 30, 0 Z' />
+                  <path className="color-pres" fill={ colID } stroke={ colID } d="M 30,10 L 5,0 L 10,7.5 L 0,10 L 10,12.5 L 5,20 Z" />
                 </svg>
               );
               var click = () => changevCol(colID);

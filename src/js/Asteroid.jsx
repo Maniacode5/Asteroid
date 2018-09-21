@@ -67,7 +67,7 @@ class Asteroid extends Component {
     }
 
     timer () {
-        setInterval(() => {
+        this._interval = setInterval(() => {
             const { trajectoire, position } = this.state;
             const boundingRect = this._element.getBoundingClientRect();
             const newState = {
@@ -98,6 +98,10 @@ class Asteroid extends Component {
         this.setState({
             path: this.generateAsteroid(1),
         })
+    }
+
+    componentWillUnmount() {
+      clearInterval(this._interval)
     }
     render() {
         const { path, position = { coordinates: { x: 0, y: 0 } } } = this.state;

@@ -14,12 +14,12 @@ class Vaisseau extends Component {
         position: undefined,
         mooving: true,
         turning: false,
-        shipFillColor: 'transparent',
+        shipFillColor: this.props.color,
         shipStrokeColor: this.props.color
     };
 
     timer () {
-        setInterval(() => {
+        this._interval = setInterval(() => {
             const { trajectoire, position, mooving, turning } = this.state;
             const newState = {};
 
@@ -115,6 +115,9 @@ class Vaisseau extends Component {
         });
 
         this.timer();
+    }
+    componentWillUnmount() {
+      clearInterval(this._interval)
     }
 
     render() {
