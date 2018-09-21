@@ -61,7 +61,7 @@ class Asteroid extends Component {
       var asteroid = this._element.getBoundingClientRect();
 
       if (!(vaisseau.top > asteroid.bottom || vaisseau.bottom < asteroid.top || vaisseau.left > asteroid.right || vaisseau.right < asteroid.left)) {
-        console.log('yousk2');
+        console.log('collide');
         // do something when collide
       }
     }

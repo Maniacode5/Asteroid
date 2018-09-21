@@ -5,7 +5,7 @@ import {positionLoop} from "./util";
 // import Collision from './CollisionCercle';
 
 const DEFAULT_ROTATION = 4;
-const DEFAULT_SPEED = 5;
+const DEFAULT_SPEED = 3;
 const DEFAULT_ANGLE = Math.random() * 360;
 
 class Vaisseau extends Component {
@@ -15,7 +15,7 @@ class Vaisseau extends Component {
         mooving: true,
         turning: false,
         shipFillColor: 'transparent',
-        shipStrokeColor: 'white'
+        shipStrokeColor: this.props.color
     };
 
     timer () {
