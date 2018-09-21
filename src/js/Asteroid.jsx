@@ -5,7 +5,7 @@ import SAT from 'sat';
 
 
 import Vector from "./Vector";
-import {positionLoop, getRandomColor} from "./util";
+import { positionLoop, getRandomColor } from "./util";
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -116,10 +116,10 @@ class Asteroid extends Component {
 
         this.setState({
             position: Vector.fromCoordinates(
-                mapBounding.left + Math.random() * mapBounding.width,
-                mapBounding.top + Math.random() * mapBounding.height
+                Math.random() * mapBounding.width,
+                Math.random() * mapBounding.height
             ),
-            trajectoire: new Vector((Math.random() + 1 ) * 3, Math.random() * 360)
+            trajectoire: new Vector((Math.random() + 1 ) * 2, Math.random() * 360)
         });
     }
 

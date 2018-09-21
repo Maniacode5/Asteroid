@@ -7,7 +7,7 @@ import Vector from "./Vector";
 import {positionLoop, getRandomColor} from "./util";
 import Asteroid from "./Asteroid";
 
-const DEFAULT_ROTATION = 5;
+const DEFAULT_ROTATION = 4;
 const DEFAULT_SPEED = 5;
 const DEFAULT_ANGLE = Math.random() * 360;
 
@@ -108,13 +108,14 @@ class Vaisseau extends Component {
             this.setState(newState);
         });
 
-        document.addEventListener('keyup', (event) => {
+        window.addEventListener('keyup', (e) => {
             let { turning } = this.state;
             const newState = {};
 
-            switch (event.key){
+            switch (e.keyCode){
+
                 case this.props.move:
-                    newState.mooving = false;
+                    newState.mooving = true;
                     break;
 
                 case this.props.turnLeft:
@@ -128,7 +129,7 @@ class Vaisseau extends Component {
                         newState.turning = false;
                     }
                     break;
-                    
+
                 default:
                     break;
             }

@@ -1,4 +1,5 @@
 import Vector from "./Vector"
+
 export function positionLoop(screen, position, boundingRect) {
     const mapBounding = document.getElementById(screen).getBoundingClientRect();
 
