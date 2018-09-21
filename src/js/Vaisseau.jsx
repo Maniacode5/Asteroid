@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+
 import cx from "classnames";
+import SAT from 'sat';
+
 import Vector from "./Vector";
 import {positionLoop, getRandomColor} from "./util";
-// import Collision from './CollisionCercle';
+import Asteroid from "./Asteroid";
 
 const DEFAULT_ROTATION = 4;
 const DEFAULT_SPEED = 5;
@@ -14,42 +17,31 @@ class Vaisseau extends Component {
         position: undefined,
         mooving: true,
         turning: false,
-        shipFillColor: getRandomColor(),
-        shipStrokeColor: getRandomColor()
+        spaceFillColor: "transparent",
+        spaceStrokeColor: "white",
+        coord: [
+            [25,10],
+            [0,0],
+            [5,7.5],
+            [-5,10],
+            [5,12.5],
+            [0,20]
+        ]
     };
 
-    timer () {
-        setInterval(() => {
-            const { trajectoire, position, mooving, turning } = this.state;
-            const newState = {};
+    get SATElement () {
+        const { position, coord } = this.state;
 
-            if (mooving) {
-                newState.position = positionLoop("Map", Vector.add(position, trajectoire), this._element.getBoundingClientRect());
-                // this.setState({ shipFillColor: getRandomColor(), shipStrokeColor: getRandomColor() })
-                this.setState({ shipFillColor: getRandomColor(), shipStrokeColor: getRandomColor()});
-            }
+        return new SAT.Polygon(
+            new SAT.Vector(position.coordinates.x, position.coordinates.y),
+            coord.map(([x, y]) => new SAT.Vector(x, y))
+        )
+    }
 
-            if (turning) {
-                newState.trajectoire = new Vector(trajectoire.length, trajectoire.angle);
-
-                switch (turning) {
-                    case "left":
-                        newState.trajectoire = trajectoire.rotate(-DEFAULT_ROTATION);
-                        break;
-                    case "right":
-                        newState.trajectoire = trajectoire.rotate(DEFAULT_ROTATION);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            /*const asteroids =  document.getElementsByClassName("asteroid");
-            for (var i = 0; i < asteroids.length; i++) {
-              Collision(this._element, asteroids[i]);
-            }
-            */
-            this.setState(newState);
-        }, 10);
+    onCollision(element) {
+        if (element instanceof Asteroid) {
+            //console.log("Boom !!!!!")
+        }
     }
 
     componentDidMount() {
@@ -116,13 +108,82 @@ class Vaisseau extends Component {
             this.setState(newState);
         });
 
-        this.timer();
+        window.addEventListener('keyup', (e) => {
+            let { turning } = this.state;
+            const newState = {};
+
+            switch (e.keyCode){
+
+                case this.props.move:
+                    newState.mooving = true;
+                    break;
+
+                case this.props.turnLeft:
+                    if (turning === "left") {
+                        newState.turning = false;
+                    }
+                    break;
+
+                case this.props.turnRight:
+                    if (turning === "right") {
+                        newState.turning = false;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            this.setState(newState);
+        });
+    }
+
+    componentWillReceiveProps ({ frame }) {
+        if (frame !== this.props.frame){
+            const { trajectoire, position, mooving, turning } = this.state;
+            const newState = {};
+
+            if (mooving) {
+                newState.position = positionLoop("Map", Vector.add(position, trajectoire), this._element.getBoundingClientRect());
+            }
+
+            if (turning) {
+                newState.trajectoire = new Vector(trajectoire.length, trajectoire.angle);
+
+                switch (turning) {
+                    case "left":
+                        newState.trajectoire = trajectoire.rotate(-DEFAULT_ROTATION);
+                        break;
+
+                    case "right":
+                        newState.trajectoire = trajectoire.rotate(DEFAULT_ROTATION);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            this.setState({ spaceStrokeColor: getRandomColor(), spaceFillColor: getRandomColor() })
+            this.setState(newState);
+        }
     }
 
     render() {
         const { position = { coordinates: { x: 0, y: 0 } }, trajectoire = {} } = this.state;
         return (
-            <path ref={(r) => { this._element = r; }} id="vaisseau" d="M 25,10 L 0,0 L 5,7.5 L -5,10 L 5,12.5 L 0,20 Z"  href="#vaisseau" className={cx("vaisseau", this.props.className)} transform={`rotate(${trajectoire.angle} ${position.coordinates.x + 10} ${position.coordinates.y+12.5}) translate(${position.coordinates.x} ${position.coordinates.y})`} stroke={this.state.shipStrokeColor} fill={this.state.shipFillColor} />
+            <path
+                ref={(r) => { this._element = r; }}
+                id={this.props.id}
+                d="M 25,10 L 0,0 L 5,7.5 L -5,10 L 5,12.5 L 0,20 Z"
+                href="#vaisseau"
+                className={cx("vaisseau", this.props.className)}
+                transform={`rotate(${trajectoire.angle} ${position.coordinates.x + 10} ${position.coordinates.y+12.5})
+                translate(${position.coordinates.x} ${position.coordinates.y})`}
+                /*fill={this.state.spaceFillColor}*/
+                /*stroke={this.state.spaceStrokeColor}*/
+                fill={this.props.color}
+                />
         );
     }
 }
