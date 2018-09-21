@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 
 import { getRandomColor } from './util';
 
-class ChooseColor extends Component {
-    state= {
-        displayed: 'color chooser'
-    }
+export var couleurVaisseau = '#ffffff';
 
-    render() {
-        const { displayed } = this.state;
-        const colors = [
+function startG(color) {
+  couleurVaisseau = color;
+}
+
+class ChooseColor extends Component {
+    state = {
+        displayed: 'color chooser',
+        color: '#ffffff',
+        colors: [
             {
                 colId: '#ffffff',
                 colName: 'White'
@@ -33,34 +36,45 @@ class ChooseColor extends Component {
             {
                 colId: null,
                 colName: 'Random Color',
-                text: 'Be awared that the color that you will get might be a color that you will not be able to see correctly on screen, if it is so than just press the End Game button to go back to this page and choose another color'
+                random: true
             }
-        ];
+        ]
+    }
+
+    changeColor(newCol) {
+      this.setState({ color: newCol })
+    }
+
+    render() {
+        const { displayed, color, colors } = this.state;
 
         return (
             <section id="choose-color">
                 <h1>CHOOSE COLOR</h1>
-                <h2>Choose your ship color :</h2>
+                <div className="start-button-wrapper">
+                  <p className="start-button" onClick={() => startG(color)}><a href="/game">Start Game</a></p>
+                </div>
+                <h2>Choose your ship color (<span style={{ color: color }}>{color}</span>) :</h2>
                 <ul>
                     {
-                        colors.map(({ colId, colName, text }) => {
-                            var p;
+                        colors.map(({ colId, colName, random }) => {
+                            var colChange;
 
-                            if (text) {
-                              p = <p className="desc">{ text }</p>
-
+                            if (random) {
+                              colChange = getRandomColor();
                             } else {
-                              p = (
+                              var pres = (
                                 <svg>
-                                    <path fill={colId} d="M 30,10 L 5,0 L 10,7.5 L 0,10 L 10,12.5 L 5,20 Z" />
+                                    <path fill={ colId } d="M 0,10 L 25,0 L 20,7.5 L 30,10 L 20,12.5 L 25,20 Z" />
                                 </svg>
                               );
+                              colChange = colId;
                             }
 
                             return (
-                              <li>
-                                  <p>{colName}</p>
-                                  { p }
+                              <li onClick={() => this.changeColor(colChange)}>
+                                  <p className="hover">{ colName }</p>
+                                  { pres }
                               </li>
                             );
                         })

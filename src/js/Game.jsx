@@ -4,6 +4,8 @@ import CollisionProvider from "./CollisionProvider";
 import Vaisseau from './Vaisseau.jsx';
 import Asteroid from './Asteroid.jsx';
 
+import { couleurVaisseau } from './ChooseColor';
+
 import {/*getRandomColor*/} from './util';
 
 function getAngle(){
@@ -14,7 +16,7 @@ function getAngle(){
 
 
 class Game extends Component {
-    state= {
+    state = {
         frame: 0,
         nbAsteroids: 1
     }
@@ -38,7 +40,7 @@ class Game extends Component {
                         {
                             (new Array(nbAsteroids)).fill(<Asteroid frame={frame}/>)
                         }
-                        <Vaisseau frame={frame} id="vaisseau" turnLeft={37} turnRight={39} color={"red"} angle={getAngle()}/>
+                        <Vaisseau frame={frame} id="vaisseau" turnLeft={37} turnRight={39} color={couleurVaisseau} angle={getAngle()}/>
                         {/*<Vaisseau frame={frame} id="vaisseau1" turnLeft={81} turnRight={68} color={"blue"} angle={getAngle()}/>*/}
                     </CollisionProvider>
                 </svg>
