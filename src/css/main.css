@@ -10,28 +10,56 @@ body > #root {
   display: flex;
   width: 100%;
 }
-body > #root > section {
+#app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+#choose-color {
   background-color: black;
   display: flex;
   flex-direction: column;
   width: 100%;
+  color: white;
+  font-family: "Press Start 2P";
 }
-body > #root > section > h1 {
+#choose-color > h1 {
     margin: 0;
     padding: 0;
     padding-top: 1vw;
-    color: white;
     text-align: center;
-    font-family: "Press Start 2P";
     font-size: 5vw;
 }
-body > #root > section > .Map {
+#choose-color > ul {
     padding: 0;
-    border: solid 1px white;
-    background-color: black;
-    height: 100%;
+    margin: 0;
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    justify-content: center;
+}
+
+#choose-color > ul > li {
+    width: 20%;
+    margin: 0 5vw;
+    position: relative;
+}
+
+#choose-color > ul > li > svg {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 svg #vaisseau {
     transform: scale(1) translate(center);
 }
+
+/* #game > .Map {
+    padding: 0;
+    border: solid 1px white;
+    background-color: black;
+    height: 100%;
+} */
