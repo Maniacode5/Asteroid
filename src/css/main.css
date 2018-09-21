@@ -39,18 +39,30 @@ body > #root {
     flex-wrap: wrap;
     list-style-type: none;
     justify-content: center;
+    align-items: center;
 }
 
 #choose-color > ul > li {
     width: 20%;
+    display: flex;
+    align-items: center;
     margin: 0 5vw;
     position: relative;
+    height: 1em;
 }
 
 #choose-color > ul > li > svg {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    top: 1.5em;
+    left: .5vw;
+    height: 2em;
+}
+
+#choose-color > ul > li > .desc {
+  font-family: 'Open Sans', cursive;
+  position: absolute;
+  top: 100%;
+  left: 1vw;
 }
 
 svg #vaisseau {
