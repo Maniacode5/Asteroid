@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import flatten from "lodash/flatten";
 import Vector from "./Vector";
-import { positionLoop, getRandomColor } from "./util";
+import { positionLoop } from "./util";
 //import Collision from './Collision';
 
 function getRandomInt(min, max) {
@@ -12,8 +12,8 @@ class Asteroid extends Component {
     state =  {
         trajectoire: undefined,
         position: undefined,
-        astFillColor: getRandomColor(),
-        astStrokeColor: getRandomColor()
+        astFillColor: 'transparent',
+        astStrokeColor: 'white'
     }
 
     generateAsteroid(coef) {
@@ -56,6 +56,16 @@ class Asteroid extends Component {
         return `M ${coord.map((p) => p.join(',')).join(" L ")} Z`;
     }
 
+    checkCollision() {
+      var vaisseau = document.getElementById('vaisseau').getBoundingClientRect();
+      var asteroid = this._element.getBoundingClientRect();
+
+      if (!(vaisseau.top > asteroid.bottom || vaisseau.bottom < asteroid.top || vaisseau.left > asteroid.right || vaisseau.right < asteroid.left)) {
+        console.log('collide');
+        // do something when collide
+      }
+    }
+
     timer () {
         setInterval(() => {
             const { trajectoire, position } = this.state;
@@ -63,8 +73,7 @@ class Asteroid extends Component {
             const newState = {
                 position : positionLoop("Map", Vector.add(position, trajectoire), boundingRect)
             };
-            this.setState({ astFillColor: getRandomColor(), astStrokeColor: getRandomColor()});
-            //this.setState({ astStrokeColor: getRandomColor(), astFillColor: getRandomColor() });
+            this.checkCollision()
             //Collision(this._element, document.getElementById("vaisseau"));
 //console.log(position)
             this.setState(newState);
@@ -87,7 +96,7 @@ class Asteroid extends Component {
 
     componentWillMount() {
         this.setState({
-            path: this.generateAsteroid(4),
+            path: this.generateAsteroid(1),
         })
     }
     render() {

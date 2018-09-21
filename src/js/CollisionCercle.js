@@ -11,7 +11,7 @@ const setSvgSize = (w, h) => {
 };
 
 // function to create svg nodes
-const createNode = (n, attrs) => {
+const createNode = (n, attrs) => { // generateAsteroid ?
 	n = document.createElementNS('http://www.w3.org/2000/svg', n);
 	for (let a in attrs) {
 		n.setAttributeNS(null, a.replace(/[A-Z]/g, m => '-' + m.toLowerCase()), attrs[a]);
@@ -24,7 +24,7 @@ const createNode = (n, attrs) => {
 
 let gravity = false;
 //--------------------------
-class Particle {
+class Particle { // class Collide ?
 	constructor() {
 		this.r = _.random(20, 30); // rayon particule (entre 20 & 30 px)
 		this.d = this.r * 2; // diamètre (rayon * 2)
@@ -51,6 +51,9 @@ class Particle {
 		this.y += (gravity ? 9.8 : 0); // on rajoute la gravité si il y en a
 
 		// check si la paricule touche la bordure de la fenetre
+		/**
+			Pas besoins pour asteroids
+		**/
 		if (this.x <= this.r || this.x + this.r > width) { // check en x (mur de droite & gauche)
 			this.x = this.x <= this.r
 								? this.r
@@ -62,7 +65,7 @@ class Particle {
 								? this.r
 								: height - this.r;
 			this.vy *= -1; // on inverse la trajectoire en y
-		}
+		} //-------------------
 		// update pos
 		this.draw();
 	}

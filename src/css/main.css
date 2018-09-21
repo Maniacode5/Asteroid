@@ -9,6 +9,7 @@ body {
 body > #root {
   display: flex;
   width: 100%;
+  font-family: "Press Start 2P", sans-serif;
 }
 body > #root > section {
   background-color: black;
@@ -20,10 +21,9 @@ body > #root > section > h1 {
     margin: 0;
     padding: 0;
     padding-top: 1vw;
-    color: white;
     text-align: center;
-    font-family: "Press Start 2P";
     font-size: 5vw;
+    color: white;
 }
 body > #root > section > .Map {
     padding: 0;
@@ -34,4 +34,93 @@ body > #root > section > .Map {
 
 svg #vaisseau {
     //transform-origin: center;
+}
+
+#start-stop-button {
+  margin-top: 2vh;
+  position: relative;
+  color: white;
+}
+
+#start-stop-button > p {
+  border: #fff 1px solid;
+  border-bottom: #fff 5px solid;
+  width: 20%;
+  text-align: center;
+  padding: 1vh;
+  margin: 0 auto;
+  transition: .2s;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#start-stop-button > p:hover {
+  cursor: pointer;
+  border-bottom: 1px solid;
+  margin-top: 4px;
+}
+
+#color-choice {
+  color: white;
+  padding-top: 10vh;
+}
+
+#color-choice > h2 {
+  padding-left: 1em;
+  margin: 0;
+  margin-top: 5vh;
+  margin-bottom: 1vh;
+}
+
+#color-choice > p {
+  margin: 0;
+  margin-bottom: 5vh;
+  margin-left: 2.5em;
+}
+
+#color-choice > ul {
+  padding: 0;
+  margin: 5vh 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+}
+
+#color-choice > ul > li {
+  width: 30%;
+  position: relative;
+}
+
+#color-choice > ul > li > .choose {
+  border: #fff 1px solid;
+  border-bottom: #fff 5px solid;
+  margin: 0 10vw 0 0;
+  padding: 1vh;
+  transition: .2s;
+}
+
+#color-choice > ul > li > .choose:hover {
+  cursor: pointer;
+  border-bottom: 1px solid;
+  margin-top: 4px;
+}
+
+#color-choice > ul > li > svg {
+  width: 100px;
+  height: 30px;
+  margin-top: 1vh;
+  position: absolute;
+  top: 100%;
+  left: 10px;
+}
+
+#color-choice > ul > li > .text {
+  font-family: 'Open Sans', cursive;
+  position: absolute;
+  top: 100%;
+  left: 1vw;
 }
