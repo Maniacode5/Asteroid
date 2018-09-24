@@ -10,6 +10,12 @@ body > #root {
   display: flex;
   width: 100%;
 }
+
+section, #chiant {
+  width: 100%;
+  height: 100%;
+}
+
 #app {
   width: 100%;
   height: 100vh;
@@ -32,38 +38,77 @@ body > #root {
 }
 
 .start-button-wrapper {
-  margin-top: 2vw;
+  margin: 2vw auto 0 auto;
+  font-family: 'Press Start 2P';
+  position: relative;
 }
 
 .start-button {
-  width: 20vw;
-  margin: 2vw auto;
-  text-align: center;
-}
-
-.start-button > a {
   border: #fff 1px solid;
   border-bottom: #fff 5px solid;
   padding: 1em;
   width: 20vw;
+  margin: 0;
   text-align: center;
   color: white;
   text-decoration: none;
+}
+
+.start-button.absolute {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .start-button:hover {
   cursor: pointer;
 }
 
-.start-button:active > a {
+.start-button:active {
   border-bottom: 1px solid;
   margin-top: 4px;
+}
+
+#choose-color > .is-choosing {
+  text-align: center;
+}
+
+#choose-color > .pres-div {
+  display: flex;
+  justify-content: space-around;
+}
+
+#choose-color > .pres-div > .pres-pl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border: #fff 1px solid;
+  padding: 1.5vw;
+}
+
+#choose-color > .pres-div > .pres-pl > p {
+  margin: 0;
+  padding-bottom: 1vw;
+  border-bottom: #fff 1px solid;
+}
+
+#choose-color > .pres-div > .pres-pl > .commands {
+  padding: 0;
+  padding-top: 1vw;
+  border: 0;
+  border-top: #fff 1px solid;
+}
+
+.pres-svg {
+  width: 1.5em;
+  height: 2em;
+  padding: 1vw;
 }
 
 #choose-color > ul {
   padding: 0;
   margin: 0;
-  height: 50vh;
+  height: 40vh;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -113,6 +158,23 @@ body > #root {
 
 svg #vaisseau {
   transform: scale(1) translate(center);
+}
+
+#game {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#game > h1 {
+    margin: 0;
+    padding: 0;
+    padding-top: 1vw;
+    color: white;
+    text-align: center;
+    font-family: "Press Start 2P";
+    font-size: 5vw;
 }
 
 #game > .Map {

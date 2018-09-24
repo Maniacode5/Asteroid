@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import { getRandomColor } from './util';
 
 export var couleurVaisseau = '#ffffff';
+export var gameStart = false;
 
 function startG(color) {
   couleurVaisseau = color;
+  gameStart = true;
 }
 
 class ChooseColor extends Component {
@@ -52,7 +54,7 @@ class ChooseColor extends Component {
             <section id="choose-color">
                 <h1>CHOOSE COLOR</h1>
                 <div className="start-button-wrapper">
-                  <p className="start-button" onClick={() => startG(color)}><a href="/game">Start Game</a></p>
+                  <p className="start-button" onClick={() => startG(color)}><a>Start Game</a></p>
                 </div>
                 <h2>Choose your ship color (<span style={{ color: color }}>{color}</span>) :</h2>
                 <ul>

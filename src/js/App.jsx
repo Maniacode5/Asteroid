@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Switch, Route } from 'react-router-dom';
 
-import ChooseColor from './ChooseColor';
+// import ChooseColor from './ChooseColor';
 import Game from './Game';
 
 class App extends Component {
@@ -10,8 +10,7 @@ class App extends Component {
     return (
       <div id="app">
         <Switch>
-          <Route exact path="/" component={ChooseColor} />
-          <Route exact path="/game" component={Game} />
+          <Route exact path="/" component={Game} />
         </Switch>
       </div>
     );
