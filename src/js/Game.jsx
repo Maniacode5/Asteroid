@@ -41,17 +41,22 @@ class Game extends Component {
 
     startInterval() {
       interval = setInterval(() => {
-          const {nbAsteroids} = this.state;
-          this.setState({ nbAsteroids : nbAsteroids + 1 })
-      }, 5000)
+        if (this.state.nbAsteroids < 20) {
+          this.setState({ nbAsteroids : this.state.nbAsteroids + 1 })
+          console.log('load 1 asteroid')
+        }
+      }, 2000)
+      console.log(interval)
     }
 
     stopInterval() {
+      console.log(interval)
       clearInterval(interval)
       interval = null;
       if (this.state.nbAsteroids !== 0) {
         this.setState({ nbAsteroids : 0 });
       }
+      console.log(interval)
     }
 
     render() {
@@ -99,7 +104,6 @@ class Game extends Component {
 
 class ChooseColor extends Component {
     state = {
-        displayed: 'color chooser',
         color1: '#fff000',
         color2: '#00ffff',
         colors: [
@@ -133,7 +137,7 @@ class ChooseColor extends Component {
     }
 
     render() {
-        const { displayed, color1, color2, colors, colToChange } = this.state;
+        const { color1, color2, colors, colToChange } = this.state;
 
         var plChanging;
 
@@ -172,12 +176,13 @@ class ChooseColor extends Component {
                         colors.map(({ colId, colName, random }) => {
                             var changeCol1;
                             var changeCol2;
+                            var pres;
 
                             if (colToChange) {
                               if (random) {
                                 changeCol1 = getRandomColor();
                               } else {
-                                var pres = (
+                                pres = (
                                   <svg>
                                       <path fill={ colId } d="M 0,10 L 25,0 L 20,7.5 L 30,10 L 20,12.5 L 25,20 Z" />
                                   </svg>
@@ -188,7 +193,7 @@ class ChooseColor extends Component {
                               if (random) {
                                 changeCol2 = getRandomColor();
                               } else {
-                                var pres = (
+                                pres = (
                                   <svg>
                                       <path fill={ colId } d="M 0,10 L 25,0 L 20,7.5 L 30,10 L 20,12.5 L 25,20 Z" />
                                   </svg>
