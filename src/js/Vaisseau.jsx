@@ -7,7 +7,7 @@ import Vector from "./Vector";
 import {positionLoop, getRandomColor} from "./util";
 import Asteroid from "./Asteroid";
 
-const DEFAULT_ROTATION = 4;
+const DEFAULT_ROTATION = 5;
 const DEFAULT_SPEED = 5;
 const DEFAULT_ANGLE = Math.random() * 360;
 
@@ -70,35 +70,6 @@ class Vaisseau extends Component {
 
                 case this.props.turnRight:
                     newState.turning = "right";
-                    break;
-
-                default:
-                    break;
-            }
-
-            this.setState(newState);
-        });
-
-        window.addEventListener('keyup', (e) => {
-            let { turning } = this.state;
-            const newState = {};
-
-            switch (e.keyCode){
-
-                case this.props.move:
-                    newState.mooving = true;
-                    break;
-
-                case this.props.turnLeft:
-                    if (turning === "left") {
-                        newState.turning = false;
-                    }
-                    break;
-
-                case this.props.turnRight:
-                    if (turning === "right") {
-                        newState.turning = false;
-                    }
                     break;
 
                 default:

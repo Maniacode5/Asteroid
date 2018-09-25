@@ -128,6 +128,11 @@ class Asteroid extends Component {
             coord: this.generateAsteroid(1),
         })
     }
+
+    componentWillUnmount() {
+      console.log('unmount asteroid')
+    }
+
     render() {
         const { coord, position = { coordinates: { x: 0, y: 0 } } } = this.state;
 

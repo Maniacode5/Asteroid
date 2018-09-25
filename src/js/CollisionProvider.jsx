@@ -5,6 +5,7 @@ import SAT from 'sat';
 export default class CollisionProvider extends Component {
     componentWillReceiveProps ({ children, frame, allowedCollision }) {
         const refs = Object.values(this.refs);
+        console.log(refs)
 
         if (frame !== this.props.frame && refs.length) {
             refs.forEach((child1, i) => {

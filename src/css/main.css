@@ -10,13 +10,164 @@ body > #root {
   display: flex;
   width: 100%;
 }
-body > #root > section {
+
+section, #chiant {
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+#choose-color {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: white;
+  font-family: "Press Start 2P";
+}
+#choose-color > h1 {
+  margin: 0;
+  padding: 0;
+  padding-top: 1vw;
+  text-align: center;
+  font-size: 5vw;
+}
+
+.start-button-wrapper {
+  margin: 2vw auto 0 auto;
+  font-family: 'Press Start 2P';
+  position: relative;
+}
+
+.start-button {
+  border: #fff 1px solid;
+  border-bottom: #fff 5px solid;
+  padding: 1em;
+  width: 20vw;
+  margin: 0;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+}
+
+.start-button.absolute {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.start-button:hover {
+  cursor: pointer;
+}
+
+.start-button:active {
+  border-bottom: 1px solid;
+  margin-top: 4px;
+}
+
+#choose-color > .is-choosing {
+  text-align: center;
+}
+
+#choose-color > .pres-div {
+  display: flex;
+  justify-content: space-around;
+}
+
+#choose-color > .pres-div > .pres-pl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border: #fff 1px solid;
+  padding: 1.5vw;
+}
+
+#choose-color > .pres-div > .pres-pl > p {
+  margin: 0;
+  padding-bottom: 1vw;
+  border-bottom: #fff 1px solid;
+}
+
+#choose-color > .pres-div > .pres-pl > .commands {
+  padding: 0;
+  padding-top: 1vw;
+  border: 0;
+  border-top: #fff 1px solid;
+}
+
+.pres-svg {
+  width: 1.5em;
+  height: 2em;
+  padding: 1vw;
+}
+
+#choose-color > ul {
+  padding: 0;
+  margin: 0;
+  height: 40vh;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#choose-color > ul > li {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  margin: 0 5vw;
+  position: relative;
+  height: 1em;
+}
+
+#choose-color > ul > li {
+  border: #fff 1px solid;
+  border-bottom: #fff 5px solid;
+  padding: 1vw;
+}
+
+#choose-color > ul > li:active {
+  border-bottom: 1px solid;
+  margin-top: 4px;
+}
+
+#choose-color > ul > li:hover {
+  cursor: pointer;
+}
+
+#choose-color > ul > li > svg {
+  position: absolute;
+  top: 25%;
+  left: 80%;
+  height: 1.5em;
+  width: 2em;
+}
+
+#choose-color > ul > li > .desc {
+  font-family: 'Open Sans', cursive;
+  position: absolute;
+  top: 100%;
+  left: 1vw;
+}
+
+svg #vaisseau {
+  transform: scale(1) translate(center);
+}
+
+#game {
   background-color: black;
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-body > #root > section > h1 {
+
+#game > h1 {
     margin: 0;
     padding: 0;
     padding-top: 1vw;
@@ -25,13 +176,10 @@ body > #root > section > h1 {
     font-family: "Press Start 2P";
     font-size: 5vw;
 }
-body > #root > section > .Map {
+
+#game > .Map {
     padding: 0;
     border: solid 1px white;
     background-color: black;
     height: 100%;
-}
-
-svg #vaisseau {
-    transform: scale(1) translate(center);
 }
