@@ -43,16 +43,22 @@ class Vaisseau extends Component {
     }
 
     onCollision(element) {
+        const { frame } = this.props;
         const { boom } = this.state;
         if (element instanceof Asteroid) {
             if (!!boom)
                 return;
-                
+
             this.setState({
                 boom: true,
                 explosionState: 0,
                 mooving: false,
                 turning: false
+            }, () => {
+                setTimeout(() => {
+                    alert("You lose, you survive " + Math.round(frame/1000) + " second. You are bad !!!");
+                    window.location.reload();
+                }, 1250)
             })
         }
     }
