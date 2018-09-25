@@ -46,7 +46,6 @@ class Asteroid extends Component {
     }
 
     componentWillReceiveProps ({ frame, boom }) {
-        const newState = {};
         if (frame  !== this.props.frame) {
             const { trajectoire, position } = this.state;
             const boundingRect = this._element.getBoundingClientRect();
