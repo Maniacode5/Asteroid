@@ -41,22 +41,22 @@ class Game extends Component {
 
     startInterval() {
       interval = setInterval(() => {
-        if (this.state.nbAsteroids < 20) {
-          this.setState({ nbAsteroids : this.state.nbAsteroids + 1 })
-          console.log('load 1 asteroid')
+        const { nbAsteroids } = this.state;
+
+        if (nbAsteroids <= 20) {
+          this.setState({ nbAsteroids : nbAsteroids + 1 })
+          console.log(nbAsteroids + ' asteroids loaded')
         }
       }, 2000)
       console.log(interval)
     }
 
     stopInterval() {
-      console.log(interval)
       clearInterval(interval)
       interval = null;
       if (this.state.nbAsteroids !== 0) {
         this.setState({ nbAsteroids : 0 });
       }
-      console.log(interval)
     }
 
     render() {
