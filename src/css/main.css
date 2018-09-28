@@ -125,13 +125,10 @@ section, #chiant {
   padding: 1vw;
 }
 
-#choose-color > ul > li:active {
-  border-bottom: 1px solid;
-  margin-top: 4px;
-}
-
 #choose-color > ul > li:hover {
   cursor: pointer;
+  border-bottom: 1px solid;
+  margin-top: 4px;
 }
 
 #choose-color > ul > li > svg {
