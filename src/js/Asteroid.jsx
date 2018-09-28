@@ -129,10 +129,15 @@ class Asteroid extends Component {
     componentDidMount() {
         const mapBounding = document.getElementById("Map").getBoundingClientRect();
 
+        const dist = 100;
+        const angle = Math.floor(Math.random() * 360);
+        const x = Math.cos(angle) * dist;
+        const y = Math.sin(angle) * dist;
+
         this.setState({
             position: Vector.fromCoordinates(
-                Math.random() * mapBounding.width,
-                Math.random() * mapBounding.height
+                x,
+                y
             ),
             trajectoire: new Vector((Math.random() + 1 ) * 2, Math.random() * 360)
         });
