@@ -44,6 +44,7 @@ section, #chiant {
 }
 
 .start-button {
+    display: block;
   border: #fff 1px solid;
   border-bottom: #fff 5px solid;
   padding: 1em;
@@ -54,16 +55,8 @@ section, #chiant {
   text-decoration: none;
 }
 
-.start-button.absolute {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .start-button:hover {
   cursor: pointer;
-}
-
-.start-button:active {
   border-bottom: 1px solid;
   margin-top: 4px;
 }
