@@ -37,10 +37,7 @@ class Game extends Component {
 
     componentDidMount() {
       this.timer();
-    }
-
-    startInterval() {
-      interval = setInterval(() => {
+      setInterval(() => {
         const { nbAsteroids } = this.state;
 
         if (nbAsteroids <= 20) {
@@ -48,12 +45,9 @@ class Game extends Component {
           console.log(nbAsteroids + ' asteroids loaded')
         }
       }, 2000)
-      console.log(interval)
     }
 
     stopInterval() {
-      clearInterval(interval)
-      interval = null;
       if (this.state.nbAsteroids !== 0) {
         this.setState({ nbAsteroids : 0 });
       }
@@ -64,8 +58,6 @@ class Game extends Component {
         var displayed = null;
 
         if (gameStart) {
-          this.startInterval()
-
           displayed = (
               <section id="game">
                   <h1>DODGE</h1>
