@@ -9,7 +9,7 @@ import Asteroid from "./Asteroid";
 
 import * as Explosion from "../image/sprite-explosion-vaisseau"
 
-const DEFAULT_ROTATION = 4;
+const DEFAULT_ROTATION = 5;
 const DEFAULT_SPEED = 5;
 const DEFAULT_ANGLE = Math.random() * 360;
 
@@ -108,35 +108,6 @@ class Vaisseau extends Component {
 
             if (boom)
                 return;
-
-            switch (e.keyCode){
-
-                case this.props.move:
-                    newState.mooving = true;
-                    break;
-
-                case this.props.turnLeft:
-                    if (turning === "left") {
-                        newState.turning = false;
-                    }
-                    break;
-
-                case this.props.turnRight:
-                    if (turning === "right") {
-                        newState.turning = false;
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-
-            this.setState(newState);
-        });
-
-        window.addEventListener('keyup', (e) => {
-            let { turning } = this.state;
-            const newState = {};
 
             switch (e.keyCode){
 
