@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import flatten from "lodash/flatten";
 import SAT from 'sat';
 
-
 import Vector from "./Vector";
 import { positionLoop, getRandomColor } from "./util";
+import Vaisseau from "./Vaisseau";
+
+import * as Explosion from "../image/sprite-explosion-asteroid";
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -15,7 +17,9 @@ class Asteroid extends Component {
         trajectoire: undefined,
         position: undefined,
         astFillColor: "transparent",
-        astStrokeColor: "white"
+        astStrokeColor: "white",
+        boom: false,
+        explosionState: 0
     }
 
     get SATElement () {
@@ -28,20 +32,31 @@ class Asteroid extends Component {
     }
 
     onCollision(element) {
-        if (element instanceof Asteroid) {
-            //console.log("Kaboom !!!!!")
+        const { boom } = this.state;
+        if (element instanceof Vaisseau) {
+            if (!!boom)
+                return;
+
+            this.setState({
+                boom: true,
+                explosionState: 0,
+                trajectoire: new Vector(0 , 0)
+            })
         }
     }
 
-    componentWillReceiveProps ({ frame }) {
+    componentWillReceiveProps ({ frame, boom }) {
         if (frame  !== this.props.frame) {
             const { trajectoire, position } = this.state;
             const boundingRect = this._element.getBoundingClientRect();
             const newState = {
                 position : positionLoop("Map", Vector.add(position, trajectoire), boundingRect)
             };
+
+            if (boom && ! this.props.boom) {
+                newState.explosionState = 0;
+            }
             this.setState({ astStrokeColor: getRandomColor(), astFillColor: getRandomColor() })
-            //this.checkCollision();
             this.setState(newState);
         }
     }
@@ -128,17 +143,34 @@ class Asteroid extends Component {
             coord: this.generateAsteroid(1),
         })
     }
+
+    componentDidUpdate () {
+        const { boom, explosionState } = this.state;
+
+        if (boom && (explosionState < Object.values(Explosion).length)) {
+            setTimeout(() => this.setState({ explosionState: explosionState+1 }), 25);
+        }
+    }
+
     render() {
-        const { coord, position = { coordinates: { x: 0, y: 0 } } } = this.state;
+        const { coord, position = { coordinates: { x: 0, y: 0 } }, boom, explosionState } = this.state;
 
         return (
-            <path
+            <g
                 ref={(r) => { this._element = r }}
-                d={`M ${coord.map((p) => p.join(',')).join(" L ")} Z`}
-                stroke="white"
-                fill="transparent"
-                transform={`translate(${position.coordinates.x} ${position.coordinates.y})`}
-                />
+                transform={`translate(${position.coordinates.x} ${position.coordinates.y})`}>
+                {
+                    !boom ? (
+                        <path
+                            d={`M ${coord.map((p) => p.join(',')).join(" L ")} Z`}
+                            stroke="white"
+                            fill="transparent"
+                            />
+                    ) : (
+                        <image href={Object.values(Explosion)[explosionState]} x="-10" y="-12" height="50px" width="50px" />
+                    )
+                }
+            </g>
         );
     }
 }
